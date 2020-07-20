@@ -12,23 +12,20 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return response()->json(Category::get(), 200);
+        return response()->json(Category::paginate(1), 200);
     }
     public function show($id)
     {
         $category = Category::find($id);
-        if(is_null($category)){
-            return response()->json(null, 404);
-        }
-        $category = Category::with('products')->findOrFail($id);
-        $response = new CategoryResource($category, 200);
+        $response['category'] = $category;
+        $response['products'] = $category->products;
         return response()->json($response, 200);
     }
 
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required'
+            'category' => 'required'
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()){

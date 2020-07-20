@@ -34,3 +34,6 @@ Route::group(['prefix' => 'products'], function(){
     Route::put('/update/{product}', 'Apis\ProductController@update');
     Route::delete('/delete/{product}', 'Apis\ProductController@delete');
 });
+
+Route::get('files/get', 'Apis\FilesController@show');
+// Route::post('files/create', 'Apis\FilesController@create');
